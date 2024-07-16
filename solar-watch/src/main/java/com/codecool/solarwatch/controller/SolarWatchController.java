@@ -1,11 +1,12 @@
 package com.codecool.solarwatch.controller;
 
+import com.codecool.solarwatch.model.SunriseSunset;
 import com.codecool.solarwatch.service.SolarWatchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 @RestController
 public class SolarWatchController {
@@ -16,8 +17,9 @@ public class SolarWatchController {
         this.solarWatchService = solarWatchService;
     }
 
-    @GetMapping("/solarwatch")
-    public ResponseEntity<?> getSolarWatchReport(@RequestParam(defaultValue = "Budapest") String city, @RequestParam(defaultValue = "#{T(java.time.LocalDate).now().toString()}") String date) {
-        return ResponseEntity.ok(solarWatchService.getSunInformation(city, date));
+    @GetMapping("/async/solarwatch")
+    public Mono<SunriseSunset> getSolarWatchReport(@RequestParam(defaultValue = "Budapest") String city, @RequestParam(defaultValue = "#{T(java.time.LocalDate).now().toString()}") String date) {
+        return solarWatchService.getSolarWatchReport(city, date);
     }
+
 }
