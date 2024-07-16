@@ -18,7 +18,6 @@ public class SolarWatchController {
 
     @GetMapping("/solarwatch")
     public ResponseEntity<?> getSolarWatchReport(@RequestParam(defaultValue = "Budapest") String city, @RequestParam(defaultValue = "#{T(java.time.LocalDate).now().toString()}") String date) {
-        return ResponseEntity.ok(solarWatchService.getSolarWatchReport(city, date));
+        return ResponseEntity.ok(solarWatchService.getSunInformation(city, date));
     }
-
 }
