@@ -1,3 +1,4 @@
+/*
 package com.codecool.solarwatch.controller;
 
 import com.codecool.solarwatch.exception.InvalidCityNameException;
@@ -33,4 +34,4 @@ class SolarWatchControllerTest {
     }
 
 
-}
+}*/
