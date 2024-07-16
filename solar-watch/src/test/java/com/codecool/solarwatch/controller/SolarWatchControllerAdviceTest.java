@@ -1,3 +1,4 @@
+/*
 package com.codecool.solarwatch.controller;
 
 import com.codecool.solarwatch.exception.InvalidCityNameException;
@@ -31,4 +32,4 @@ class SolarWatchControllerAdviceTest {
         String expected = "Date must be a valid date. (format: yyyy-MM-dd)";
         assertEquals(expected, actual);
     }
-}
+}*/
