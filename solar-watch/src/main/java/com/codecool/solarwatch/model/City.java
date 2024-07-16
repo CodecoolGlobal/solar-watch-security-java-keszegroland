@@ -1,3 +1,4 @@
+/*
 package com.codecool.solarwatch.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -59,3 +60,4 @@ public class City {
     }
 
 }
+*/

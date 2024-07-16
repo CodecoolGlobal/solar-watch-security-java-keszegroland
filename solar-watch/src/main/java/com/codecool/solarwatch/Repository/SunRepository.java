@@ -1,3 +1,4 @@
+/*
 package com.codecool.solarwatch.Repository;
 
 import com.codecool.solarwatch.model.City;
@@ -10,3 +11,4 @@ import java.util.Optional;
 public interface SunRepository extends JpaRepository<Sun, Integer> {
     Optional<Sun> findByCityAndDate(City city, LocalDate date);
 }
+*/

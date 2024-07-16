@@ -1,3 +1,4 @@
+/*
 package com.codecool.solarwatch.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -55,3 +56,4 @@ public class Sun {
         this.date = date;
     }
 }
+*/
