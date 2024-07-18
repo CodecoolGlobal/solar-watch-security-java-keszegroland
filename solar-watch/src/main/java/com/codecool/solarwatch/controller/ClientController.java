@@ -1,11 +1,11 @@
 package com.codecool.solarwatch.controller;
 
-import com.codecool.solarwatch.model.Client;
-import com.codecool.solarwatch.model.entity.Role;
-import com.codecool.solarwatch.model.entity.UserEntity;
+import com.codecool.solarwatch.model.payload.ClientRequest;
+import com.codecool.solarwatch.model.payload.CreateClientRequest;
 import com.codecool.solarwatch.model.payload.JwtResponse;
-import com.codecool.solarwatch.repository.UserRepository;
+
 import com.codecool.solarwatch.security.jwt.JwtUtils;
+import com.codecool.solarwatch.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,28 +23,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class ClientController {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final ClientService clientService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
     @Autowired
-    public ClientController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+    public ClientController(ClientService clientService, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+        this.clientService = clientService;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> createUser(@RequestBody UserEntity request) {
-        Client user = new Client(request.getUsername(), passwordEncoder.encode(request.getPassword()), Role.ROLE_USER);
-        userRepository.createUser(user);
+    public ResponseEntity<Void> createUser(@RequestBody CreateClientRequest clientRequest) {
+        clientService.createUser(clientRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody UserEntity loginRequest) {
+    public ResponseEntity<?> authenticateUser(@RequestBody ClientRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -65,4 +61,11 @@ public class ClientController {
     public String testMe() {
         return "Hello world";
     }
+
+    @PatchMapping("/becomeAnAdmin")
+    @PreAuthorize("hasRole('USER')")
+    public String becomeAnAdmin() {
+        return clientService.becomeAnAdminWithAUser();
+    }
+
 }
