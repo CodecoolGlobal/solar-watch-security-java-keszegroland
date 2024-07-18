@@ -6,7 +6,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "users")
-public class UserEntity {
+public class ClientEntity {
 
     @Id
     @GeneratedValue

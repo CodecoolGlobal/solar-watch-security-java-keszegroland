@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface SunRepository extends JpaRepository<SunEntity, Integer> {
     Optional<SunEntity> findByCityAndDate(CityEntity city, LocalDate date);
+
+    Optional<SunEntity> findById(long id);
 }

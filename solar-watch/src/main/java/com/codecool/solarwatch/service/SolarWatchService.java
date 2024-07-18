@@ -1,5 +1,7 @@
 package com.codecool.solarwatch.service;
 
+import com.codecool.solarwatch.model.payload.CreateSolarWatchReportRequest;
+import com.codecool.solarwatch.model.payload.SolarWatchReportRequest;
 import com.codecool.solarwatch.repository.CityRepository;
 import com.codecool.solarwatch.repository.SunRepository;
 import com.codecool.solarwatch.exception.InvalidCityNameException;
@@ -10,18 +12,24 @@ import com.codecool.solarwatch.model.entity.SunEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Optional;
 
 @Service
 public class SolarWatchService {
-    private static final String API_KEY = System.getenv("API_KEY");
-    private static final String GEO_API_URL = "https://api.openweathermap.org/geo/1.0/direct?q=%s&appid=%s";
-    private static final String SUN_API_URL = "https://api.sunrise-sunset.org/json?lat=%s&lng=%s&date=%s";
+    @Value("${api.key}")
+    private String api_key;
+
+    @Value("${geo.api.url}")
+    private String geo_api_url;
+
+    @Value("${sun.api.url}")
+    private String sun_api_url;
+
     private final RestTemplate restTemplate;
     private static final Logger logger = LoggerFactory.getLogger(SolarWatchService.class);
     private final CityRepository cityRepository;
@@ -35,12 +43,11 @@ public class SolarWatchService {
     }
 
     private CityEntity getCityByName(String cityName) {
-        Optional<CityEntity> city = cityRepository.findByName(cityName);
-        return city.orElseGet(() -> fetchCityByNameFromAPI(cityName));
+        return cityRepository.findByName(cityName).orElseGet(() -> fetchCityByNameFromAPI(cityName));
     }
 
     private CityEntity fetchCityByNameFromAPI(String cityName) {
-        String url = String.format(GEO_API_URL, cityName, API_KEY);
+        String url = String.format(geo_api_url, cityName, api_key);
         LongitudeLatitude[] response = restTemplate.getForObject(url, LongitudeLatitude[].class);
         logger.info("Response from Open Weather API: {}", (Object) response);
         if (response == null || response.length == 0) {
@@ -53,13 +60,17 @@ public class SolarWatchService {
 
     private CityEntity saveNewCity(LongitudeLatitude report) {
         CityEntity newCity = new CityEntity();
-        newCity.setName(report.name());
-        newCity.setLat(report.lat());
-        newCity.setLon(report.lon());
-        newCity.setState(report.state());
-        newCity.setCountry(report.country());
+        setCityFields(newCity, report);
         cityRepository.save(newCity);
         return newCity;
+    }
+
+    private void setCityFields(CityEntity city, LongitudeLatitude report) {
+        city.setName(report.name());
+        city.setLat(report.lat());
+        city.setLon(report.lon());
+        city.setState(report.state());
+        city.setCountry(report.country());
     }
 
     private LocalDate convertDate(String date) {
@@ -73,12 +84,11 @@ public class SolarWatchService {
     public SunEntity getSunInformation(String cityName, String date) {
         CityEntity city = getCityByName(cityName);
         LocalDate searchDate = convertDate(date);
-        Optional<SunEntity> sun = sunRepository.findByCityAndDate(city, searchDate);
-        return sun.orElseGet(() -> fetchSunFromAPI(city, searchDate));
+        return sunRepository.findByCityAndDate(city, searchDate).orElseGet(() -> fetchSunFromAPI(city, searchDate));
     }
 
     private SunEntity fetchSunFromAPI(CityEntity city, LocalDate searchDate) {
-        String url = String.format(SUN_API_URL, city.getLat(), city.getLon(), searchDate);
+        String url = String.format(sun_api_url, city.getLat(), city.getLon(), searchDate);
         SunriseSunsetResult response = restTemplate.getForObject(url, SunriseSunsetResult.class);
         logger.info("Response from Sunrise-Sunset API: {}", response);
         if (response == null) {
@@ -95,5 +105,50 @@ public class SolarWatchService {
         newSun.setDate(searchDate);
         sunRepository.save(newSun);
         return newSun;
+    }
+
+    public void createNewSolarWatchReport(CreateSolarWatchReportRequest request) {
+        CityEntity cityEntity = cityRepository.findByName(request.getCityName()).orElseGet(() -> createNewCityEntity(request));
+        SunriseSunset sunriseSunset = new SunriseSunset(request.getSunrise(), request.getSunset());
+        saveNewSun(sunriseSunset, cityEntity, LocalDate.now());
+    }
+
+    private CityEntity createNewCityEntity(CreateSolarWatchReportRequest request) {
+        CityEntity newCity = new CityEntity();
+        newCity.setName(request.getCityName());
+        newCity.setLat(request.getLatitude());
+        newCity.setLon(request.getLongitude());
+        newCity.setState(request.getState());
+        newCity.setCountry(request.getCountry());
+        return cityRepository.save(newCity);
+    }
+
+    public void updateSolarWatchReportById(long sunId, SolarWatchReportRequest updatedReport) {
+        SunEntity sunEntity = sunRepository.findById(sunId).orElseThrow(() -> new RuntimeException("Sun with this id does not exist."));
+        CityEntity cityEntity = sunEntity.getCity();
+        updateCityEntity(cityEntity, updatedReport);
+        updateSunEntity(sunEntity, updatedReport, cityEntity);
+    }
+
+    private void updateCityEntity(CityEntity cityEntity, SolarWatchReportRequest updatedReport) {
+        cityEntity.setCountry(updatedReport.getCountry());
+        cityEntity.setName(updatedReport.getCityName());
+        cityEntity.setLat(updatedReport.getLatitude());
+        cityEntity.setLon(updatedReport.getLongitude());
+        cityEntity.setState(updatedReport.getState());
+        cityEntity.setCountry(updatedReport.getCountry());
+        cityRepository.save(cityEntity);
+    }
+
+    private void updateSunEntity(SunEntity sunEntity, SolarWatchReportRequest updatedReport, CityEntity cityEntity) {
+        sunEntity.setSunrise(updatedReport.getSunrise());
+        sunEntity.setSunset(updatedReport.getSunset());
+        sunEntity.setCity(cityEntity);
+        sunEntity.setDate(LocalDate.now());
+        sunRepository.save(sunEntity);
+    }
+
+    public void deleteSolarWatchReportByCityId(long cityId) {
+        cityRepository.deleteById(cityId);
     }
 }
