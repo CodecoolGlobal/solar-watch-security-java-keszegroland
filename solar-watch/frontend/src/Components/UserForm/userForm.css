@@ -8,17 +8,17 @@
   height: 100%;
 }
 
+#header {
+  font-size: 36px;
+  text-align: center;
+}
+
 .register-container {
   background: rgb(83, 82, 82);
   border-radius: 150px 0 0 100px;
   width: 43%;
   height: 100%;
   min-width: 400px;
-}
-
-#header {
-  font-size: 36px;
-  text-align: center;
 }
 
 .input-box {

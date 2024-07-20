@@ -1,5 +1,6 @@
 package com.codecool.solarwatch.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,5 +22,6 @@ public class CityEntity {
     private String state;
     private String country;
     @OneToMany(mappedBy = "city", orphanRemoval = true, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<SunEntity> suns;
 }

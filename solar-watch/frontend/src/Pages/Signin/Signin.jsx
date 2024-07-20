@@ -1,10 +1,10 @@
 import UserForm from "../../Components/UserForm/UserForm";
-import "./login.css";
+import "./signin.css";
 
 function Login() {
 
-  return <div className="login">
-    <UserForm formType={"login"} />
+  return <div className="signin">
+    <UserForm formType={"signin"} />
   </div>
 }
 

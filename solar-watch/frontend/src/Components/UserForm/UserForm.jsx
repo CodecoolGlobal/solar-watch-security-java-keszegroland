@@ -9,7 +9,7 @@ async function handleRequest(url, client) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(client),
   });
-  return response;
+  return response.json();
 }
 
 function UserForm({ formType }) {
@@ -20,10 +20,18 @@ function UserForm({ formType }) {
   async function handleSubmit(e) {
     e.preventDefault();
     const client = { username, password };
-    const url =
-      formType === "register" ? "/api/user/register" : "/api/user/signin";
-    await handleRequest(url, client);
-    navigate(formType === "register" ? "/user/login" : "/");
+    const url = formType === "register" ? "/api/user/register" : "/api/user/signin";
+    const data = await handleRequest(url, client);
+    saveJwtTokenToLocalStorage(data);
+  }
+
+  function saveJwtTokenToLocalStorage(data) {
+    if (formType === "signin") {
+      localStorage.setItem("token", data.jwt);
+      navigate("/");
+    } else {
+      navigate("/user/signin");
+    }
   }
 
   const isRegister = formType === "register";

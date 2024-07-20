@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Register from './Pages/Register/Register';
-import Login from './Pages/Login/Login';
-
+import MainPage from './Pages/MainPage/MainPage';
+import Signin from './Pages/Signin/Signin';
 
 const router = createBrowserRouter(
   [
     {
       children: [{
         path: "/",
-        element: <App />
+        element: <Navigate to="solarwatch" replace />
       },
       {
         path: "/user/register",
@@ -21,7 +20,11 @@ const router = createBrowserRouter(
       },
       {
         path: "/user/signin",
-        element: <Login />
+        element: <Signin />
+      },
+      {
+        path: "/solarwatch",
+        element: <MainPage />
       }
       ]
     }
