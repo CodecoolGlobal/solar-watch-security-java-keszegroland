@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Register from './Pages/Register/Register';
+import Login from './Pages/Login/Login';
 
 
 const router = createBrowserRouter(
@@ -17,6 +18,10 @@ const router = createBrowserRouter(
       {
         path: "/user/register",
         element: <Register />
+      },
+      {
+        path: "/user/signin",
+        element: <Login />
       }
       ]
     }

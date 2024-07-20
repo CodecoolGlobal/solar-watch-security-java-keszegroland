@@ -1,10 +1,9 @@
-import ClientForm from "../../Components/ClientForm/ClientForm";
+import UserForm from "../../Components/UserForm/UserForm";
 import "./register.css";
 
 function Register() {
-
   return <div className="register">
-    <ClientForm />
+    <UserForm formType={"register"} />
   </div>
 }
 
