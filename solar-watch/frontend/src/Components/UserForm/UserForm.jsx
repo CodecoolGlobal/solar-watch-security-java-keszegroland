@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./userForm.css";
 import { FaLock, FaUser } from "react-icons/fa";
+import { useAuth } from "../../AuthProvider.js";
 
 async function handleRequest(url, client) {
   const response = await fetch(url, {
@@ -16,6 +17,7 @@ function UserForm({ formType }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -26,10 +28,11 @@ function UserForm({ formType }) {
   }
 
   function saveJwtTokenToLocalStorage(data) {
-    if (formType === "signin") {
+    if (formType === "signin" && data.jwt) {
       localStorage.setItem("token", data.jwt);
+      login(data.jwt);
       navigate("/");
-    } else {
+    } else if (formType === "register") {
       navigate("/user/signin");
     }
   }

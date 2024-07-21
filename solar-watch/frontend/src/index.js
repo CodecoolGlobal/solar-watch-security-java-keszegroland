@@ -6,27 +6,33 @@ import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Register from './Pages/Register/Register';
 import MainPage from './Pages/MainPage/MainPage';
 import Signin from './Pages/Signin/Signin';
+import ProtectedRoute from './ProtectedRoute';
+import AuthProvider from './AuthProvider';
 
 const router = createBrowserRouter(
   [
     {
-      children: [{
-        path: "/",
-        element: <Navigate to="solarwatch" replace />
-      },
-      {
-        path: "/user/register",
-        element: <Register />
-      },
-      {
-        path: "/user/signin",
-        element: <Signin />
-      },
-      {
-        path: "/solarwatch",
-        element: <MainPage />
-      }
+      path: "/",
+      element: <Navigate to="solarwatch" replace />
+    },
+    {
+      path: "/user/register",
+      element: <Register />
+    },
+    {
+      path: "/user/signin",
+      element: <Signin />
+    },
+    {
+      path: "/solarwatch",
+      element: <ProtectedRoute />,
+      children: [
+        {
+          path: "",
+          element: <MainPage />
+        }
       ]
+
     }
   ]
 )
@@ -34,7 +40,9 @@ const router = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
 
