@@ -1,0 +1,53 @@
+.city-data-table {
+  max-width: 100%;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: black;
+  max-height: 90vh;
+}
+
+.city-data-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.city-data-table th,
+.city-data-table td {
+  padding: 15px;
+  text-align: center;
+}
+
+.city-data-table thead {
+  background-color: #95A5A6;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+}
+
+.city-data-table tbody tr {
+  background-color: #ffffff;
+  margin-bottom: 25px;
+}
+
+.city-data-table td {
+  padding: 25px 30px;
+}
+
+.city-data-table table tr:last-child td:first-child {
+  border-bottom-left-radius: 13px;
+}
+
+.city-data-table table tr:last-child td:last-child {
+  border-bottom-right-radius: 13px;
+}
+
+.city-data-table table tr:first-child th:first-child {
+  border-top-left-radius: 13px;
+}
+
+.city-data-table table tr:first-child th:last-child {
+  border-top-right-radius: 13px;
+}
