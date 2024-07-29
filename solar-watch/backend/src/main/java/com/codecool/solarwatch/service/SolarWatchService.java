@@ -1,12 +1,11 @@
 package com.codecool.solarwatch.service;
 
-import com.codecool.solarwatch.model.payload.CreateSolarWatchReportRequest;
+import com.codecool.solarwatch.dto.*;
 import com.codecool.solarwatch.model.payload.SolarWatchReportRequest;
 import com.codecool.solarwatch.repository.CityRepository;
 import com.codecool.solarwatch.repository.SunRepository;
 import com.codecool.solarwatch.exception.InvalidCityNameException;
 import com.codecool.solarwatch.exception.InvalidDateException;
-import com.codecool.solarwatch.model.*;
 import com.codecool.solarwatch.model.entity.CityEntity;
 import com.codecool.solarwatch.model.entity.SunEntity;
 import org.slf4j.Logger;
@@ -82,10 +81,11 @@ public class SolarWatchService {
         }
     }
 
-    public SunEntity getSunInformation(String cityName, String date) {
+    public SolarWatchReportDTO getSunInformation(String cityName, String date) {
         CityEntity city = getCityByName(cityName);
         LocalDate searchDate = convertDate(date);
-        return sunRepository.findByCityAndDate(city, searchDate).orElseGet(() -> fetchSunFromAPI(city, searchDate));
+        SunEntity sunEntity = sunRepository.findByCityAndDate(city, searchDate).orElseGet(() -> fetchSunFromAPI(city, searchDate));
+        return convertSunEntityToSolarWatchReportDTO(sunEntity);
     }
 
     private SunEntity fetchSunFromAPI(CityEntity city, LocalDate searchDate) {
@@ -108,13 +108,15 @@ public class SolarWatchService {
         return newSun;
     }
 
-    public void createNewSolarWatchReport(CreateSolarWatchReportRequest request) {
+    public SolarWatchReportDTO createNewSolarWatchReport(SolarWatchReportRequest request) {
         CityEntity cityEntity = cityRepository.findByName(request.getCityName()).orElseGet(() -> createNewCityEntity(request));
         SunriseSunset sunriseSunset = new SunriseSunset(request.getSunrise(), request.getSunset());
-        saveNewSun(sunriseSunset, cityEntity, LocalDate.now());
+        SunEntity sunEntity = saveNewSun(sunriseSunset, cityEntity, LocalDate.now());
+
+        return convertSunEntityToSolarWatchReportDTO(sunEntity);
     }
 
-    private CityEntity createNewCityEntity(CreateSolarWatchReportRequest request) {
+    private CityEntity createNewCityEntity(SolarWatchReportRequest request) {
         CityEntity newCity = new CityEntity();
         newCity.setName(request.getCityName());
         newCity.setLat(request.getLatitude());
@@ -124,12 +126,13 @@ public class SolarWatchService {
         return cityRepository.save(newCity);
     }
 
-    public SunEntity updateSolarWatchReportById(long sunId, SolarWatchReportRequest updatedReport) {
+    public SolarWatchReportDTO updateSolarWatchReportById(long sunId, SolarWatchReportRequest updatedReport) {
         SunEntity sunEntity = sunRepository.findById(sunId).orElseThrow(() -> new RuntimeException("Sun with this id does not exist."));
         CityEntity cityEntity = sunEntity.getCity();
         updateCityEntity(cityEntity, updatedReport);
-        return updateSunEntity(sunEntity, updatedReport, cityEntity);
+        updateSunEntity(sunEntity, updatedReport, cityEntity);
 
+        return convertSunEntityToSolarWatchReportDTO(sunEntity);
     }
 
     private void updateCityEntity(CityEntity cityEntity, SolarWatchReportRequest updatedReport) {
@@ -142,23 +145,33 @@ public class SolarWatchService {
         cityRepository.save(cityEntity);
     }
 
-    private SunEntity updateSunEntity(SunEntity sunEntity, SolarWatchReportRequest updatedReport, CityEntity cityEntity) {
+    private void updateSunEntity(SunEntity sunEntity, SolarWatchReportRequest updatedReport, CityEntity cityEntity) {
         sunEntity.setSunrise(updatedReport.getSunrise());
         sunEntity.setSunset(updatedReport.getSunset());
         sunEntity.setCity(cityEntity);
         sunEntity.setDate(LocalDate.now());
-        return sunRepository.save(sunEntity);
+        sunRepository.save(sunEntity);
     }
 
-    public void deleteSolarWatchReportByCityId(long cityId) {
+    public Long deleteSolarWatchReportByCityId(long cityId) {
         cityRepository.deleteById(cityId);
+        return cityId;
     }
 
-    public List<SunEntity> getAllSolarWatchReports() {
-        return sunRepository.findAll();
+    public List<SolarWatchReportDTO> getAllSolarWatchReports() {
+        List<SunEntity> sunEntities = sunRepository.findAll();
+        return sunEntities.stream()
+                .map(this::convertSunEntityToSolarWatchReportDTO)
+                .toList();
     }
 
-    public SunEntity getSolarWatchReportById(long sunId) {
-        return sunRepository.findById(sunId).orElseThrow(() -> new RuntimeException("Sun with this id does not exist."));
+    private SolarWatchReportDTO convertSunEntityToSolarWatchReportDTO(SunEntity sunEntity) {
+        CityEntity cityEntity = sunEntity.getCity();
+        return new SolarWatchReportDTO(sunEntity.getId(), cityEntity.getName(), cityEntity.getLat(), cityEntity.getLon(), cityEntity.getId(), cityEntity.getState(), cityEntity.getCountry(), sunEntity.getSunrise(), sunEntity.getSunset());
+    }
+
+    public SolarWatchReportDTO getSolarWatchReportById(long sunId) {
+        SunEntity sunEntity = sunRepository.findById(sunId).orElseThrow(() -> new RuntimeException("Sun with this id does not exist."));
+        return convertSunEntityToSolarWatchReportDTO(sunEntity);
     }
 }

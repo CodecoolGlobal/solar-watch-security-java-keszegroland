@@ -16,12 +16,12 @@ function CityDataTable({ cityReport }) {
       </thead>
       <tbody>
         <tr>
-          <td>{cityReport.city.name}</td>
-          <td>{cityReport.city.lat}</td>
-          <td>{cityReport.city.lon}</td>
-          <td>{cityReport.city.country}</td>
-          <td>{cityReport.sunrise}</td>
-          <td>{cityReport.sunset}</td>
+          <td>{cityReport?.cityName}</td>
+          <td>{cityReport?.latitude}</td>
+          <td>{cityReport?.longitude}</td>
+          <td>{cityReport?.country}</td>
+          <td>{cityReport?.sunrise}</td>
+          <td>{cityReport?.sunset}</td>
         </tr>
       </tbody>
     </table>

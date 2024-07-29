@@ -2,7 +2,7 @@
 package com.codecool.solarwatch.controller;
 
 import com.codecool.solarwatch.exception.InvalidCityNameException;
-import com.codecool.solarwatch.model.SunriseSunset;
+import com.codecool.solarwatch.controller.dto.SunriseSunset;
 import com.codecool.solarwatch.service.SolarWatchService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
