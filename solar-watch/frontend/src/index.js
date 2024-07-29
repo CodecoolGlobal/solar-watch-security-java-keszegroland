@@ -8,6 +8,8 @@ import MainPage from './Pages/MainPage/MainPage';
 import Signin from './Pages/Signin/Signin';
 import ProtectedRoute from './ProtectedRoute';
 import AuthProvider from './AuthProvider';
+import AdminPage from './Pages/AdminPage/AdminPage';
+import ReportHandler from './Pages/ReportHandler/ReportHandler';
 
 const router = createBrowserRouter(
   [
@@ -24,18 +26,31 @@ const router = createBrowserRouter(
       element: <Signin />
     },
     {
+      path: "/admin",
+      element: <ProtectedRoute roles={["ROLE_ADMIN"]} />,
+      children: [
+        {
+          path: "",
+          element: <AdminPage />
+        },
+        {
+          path: "update/:sunId",
+          element: <ReportHandler />
+        }
+      ]
+    },
+    {
       path: "/solarwatch",
-      element: <ProtectedRoute />,
+      element: <ProtectedRoute roles={["ROLE_USER", "ROLE_ADMIN"]} />,
       children: [
         {
           path: "",
           element: <MainPage />
         }
       ]
-
     }
   ]
-)
+);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

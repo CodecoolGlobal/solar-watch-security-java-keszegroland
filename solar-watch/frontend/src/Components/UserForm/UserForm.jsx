@@ -29,8 +29,10 @@ function UserForm({ formType }) {
 
   function saveJwtTokenToLocalStorage(data) {
     if (formType === "signin" && data.jwt) {
+      const user = { ...data, role: data.role };
+      localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", data.jwt);
-      login(data.jwt);
+      login(user);
       navigate("/");
     } else if (formType === "register") {
       navigate("/user/signin");

@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 @Service
 public class SolarWatchService {
@@ -150,5 +151,9 @@ public class SolarWatchService {
 
     public void deleteSolarWatchReportByCityId(long cityId) {
         cityRepository.deleteById(cityId);
+    }
+
+    public List<SunEntity> getAllSolarWatchReports() {
+        return sunRepository.findAll();
     }
 }
