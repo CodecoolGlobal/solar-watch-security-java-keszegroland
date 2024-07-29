@@ -1,15 +1,66 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+async function fetchSolarwatchReport(sunId, token) {
+  const response = await fetch(`/api/solarwatch/${sunId}`,
+    {
+      headers: { "Authorization": `Bearer ${token}` }
+    }
+  );
+  return await response.json();
+}
+
+async function updateSolarwatchReport(sunId, token, newReport) {
+  const response = await fetch(`/api/solarwatch/update/${sunId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify(newReport),
+    }
+  );
+  return await response.json();
+}
 
 function ReportHandler() {
-  const [city, setCity] = useState("");
+  const [cityName, setCityName] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [country, setCountry] = useState("");
   const [sunrise, setSunrise] = useState("");
   const [sunset, setSunset] = useState("");
+  const token = localStorage.getItem("token");
+  const { sunId } = useParams();
+  const navigate = useNavigate();
 
-  function handleSubmit() {
+  useEffect(() => {
+    async function handleFetchSolarwatchReport() {
+      const response = await fetchSolarwatchReport(sunId, token);
+      setCityName(response?.city?.name || "");
+      setLatitude(response?.city?.lat || "");
+      setLongitude(response?.city?.lon || "");
+      setCountry(response?.city?.country || "");
+      setSunrise(response?.sunrise || "");
+      setSunset(response?.sunset || "");
+    }
+    handleFetchSolarwatchReport();
+  }, [sunId, token]);
 
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const newReport = {
+      cityName: cityName,
+      latitude: latitude,
+      longitude: longitude,
+      country: country,
+      sunrise: sunrise,
+      sunset: sunset
+    };
+    await updateSolarwatchReport(sunId, token, newReport);
+    navigate("/admin");
   }
 
 
@@ -21,7 +72,8 @@ function ReportHandler() {
           type="text"
           placeholder="City"
           required
-          onChange={(e) => setCity(e.target.value)}
+          value={cityName}
+          onChange={(e) => setCityName(e.target.value)}
           id="city"
         />
       </div>
@@ -30,6 +82,7 @@ function ReportHandler() {
           type="text"
           placeholder="Latitude"
           required
+          value={latitude}
           onChange={(e) => setLatitude(e.target.value)}
           id="latitude"
         />
@@ -39,6 +92,7 @@ function ReportHandler() {
           type="text"
           placeholder="Longitude"
           required
+          value={longitude}
           onChange={(e) => setLongitude(e.target.value)}
           id="Longitude"
         />
@@ -48,6 +102,7 @@ function ReportHandler() {
           type="text"
           placeholder="country"
           required
+          value={country}
           onChange={(e) => setCountry(e.target.value)}
           id="country"
         />
@@ -57,6 +112,7 @@ function ReportHandler() {
           type="text"
           placeholder="sunrise"
           required
+          value={sunrise}
           onChange={(e) => setSunrise(e.target.value)}
           id="sunrise"
         />
@@ -66,6 +122,7 @@ function ReportHandler() {
           type="text"
           placeholder="sunset"
           required
+          value={sunset}
           onChange={(e) => setSunset(e.target.value)}
           id="sunset"
         />

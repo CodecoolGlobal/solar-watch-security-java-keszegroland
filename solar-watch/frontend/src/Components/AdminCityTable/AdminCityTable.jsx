@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./adminCityTable.css";
 
-function AdminCityTable({ cityReports, onDelete }) {
+function AdminCityTable({ reports, onDelete }) {
   return <div className="city-data-table">
     <table>
       <thead>
@@ -16,19 +16,19 @@ function AdminCityTable({ cityReports, onDelete }) {
         </tr>
       </thead>
       <tbody>
-        {cityReports && cityReports.map(cityReport => (
-          <tr key={cityReport.id}>
-            <td>{cityReport.city.name}</td>
-            <td>{cityReport.city.lat}</td>
-            <td>{cityReport.city.lon}</td>
-            <td>{cityReport.city.country}</td>
-            <td>{cityReport.sunrise}</td>
-            <td>{cityReport.sunset}</td>
+        {reports && reports.map(report => (
+          <tr key={report.id}>
+            <td>{report.city.name}</td>
+            <td>{report.city.lat}</td>
+            <td>{report.city.lon}</td>
+            <td>{report.city.country}</td>
+            <td>{report.sunrise}</td>
+            <td>{report.sunset}</td>
             <td>
-              <Link to={`/admin/update/${cityReport.id}`}>
+              <Link to={`/admin/update/${report.id}`}>
                 <button type="button">Update</button>
               </Link>
-              <button type="button" onClick={() => onDelete(cityReport.id)}>Delete</button>
+              <button type="button" onClick={() => onDelete(report.city.id)}>Delete</button>
             </td>
           </tr>
         ))}

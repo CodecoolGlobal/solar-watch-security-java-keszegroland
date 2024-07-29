@@ -36,9 +36,8 @@ public class SolarWatchController {
 
     @PatchMapping("/update/{sunId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> updateSolarWatchReport(@PathVariable long sunId, @RequestBody SolarWatchReportRequest updatedReport) {
-        solarWatchService.updateSolarWatchReportById(sunId, updatedReport);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public SunEntity updateSolarWatchReport(@PathVariable long sunId, @RequestBody SolarWatchReportRequest updatedReport) {
+        return solarWatchService.updateSolarWatchReportById(sunId, updatedReport);
     }
 
     @DeleteMapping("/delete/{cityId}")
@@ -52,5 +51,11 @@ public class SolarWatchController {
     @PreAuthorize("hasRole('ADMIN')")
     public List<SunEntity> getAllSolarWatchReports() {
         return solarWatchService.getAllSolarWatchReports();
+    }
+
+    @GetMapping("/{sunId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public SunEntity getSolarWatchReportById(@PathVariable long sunId) {
+        return solarWatchService.getSolarWatchReportById(sunId);
     }
 }

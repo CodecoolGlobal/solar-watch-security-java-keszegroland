@@ -124,11 +124,12 @@ public class SolarWatchService {
         return cityRepository.save(newCity);
     }
 
-    public void updateSolarWatchReportById(long sunId, SolarWatchReportRequest updatedReport) {
+    public SunEntity updateSolarWatchReportById(long sunId, SolarWatchReportRequest updatedReport) {
         SunEntity sunEntity = sunRepository.findById(sunId).orElseThrow(() -> new RuntimeException("Sun with this id does not exist."));
         CityEntity cityEntity = sunEntity.getCity();
         updateCityEntity(cityEntity, updatedReport);
-        updateSunEntity(sunEntity, updatedReport, cityEntity);
+        return updateSunEntity(sunEntity, updatedReport, cityEntity);
+
     }
 
     private void updateCityEntity(CityEntity cityEntity, SolarWatchReportRequest updatedReport) {
@@ -141,12 +142,12 @@ public class SolarWatchService {
         cityRepository.save(cityEntity);
     }
 
-    private void updateSunEntity(SunEntity sunEntity, SolarWatchReportRequest updatedReport, CityEntity cityEntity) {
+    private SunEntity updateSunEntity(SunEntity sunEntity, SolarWatchReportRequest updatedReport, CityEntity cityEntity) {
         sunEntity.setSunrise(updatedReport.getSunrise());
         sunEntity.setSunset(updatedReport.getSunset());
         sunEntity.setCity(cityEntity);
         sunEntity.setDate(LocalDate.now());
-        sunRepository.save(sunEntity);
+        return sunRepository.save(sunEntity);
     }
 
     public void deleteSolarWatchReportByCityId(long cityId) {
@@ -155,5 +156,9 @@ public class SolarWatchService {
 
     public List<SunEntity> getAllSolarWatchReports() {
         return sunRepository.findAll();
+    }
+
+    public SunEntity getSolarWatchReportById(long sunId) {
+        return sunRepository.findById(sunId).orElseThrow(() -> new RuntimeException("Sun with this id does not exist."));
     }
 }
