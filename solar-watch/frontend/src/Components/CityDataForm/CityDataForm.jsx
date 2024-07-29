@@ -3,16 +3,15 @@ import IndicateError from "../IndicateError/IndicateError";
 import CityDataTable from "../CityDataTable/CityDataTable";
 import "./cityDataForm.css";
 
-async function fetchInfosForSearchedCity(cityName, options = {}) {
+async function fetchInfosForSearchedCity(cityName) {
   const token = localStorage.getItem("token");
-  const headers = {
-    ...options.headers,
-    "Authorization": `Bearer ${token}`
-  };
-
-
+  console.log(token);
   try {
-    const response = await fetch(`/api/solarwatch?city=${cityName}`, { ...options, headers });
+    const response = await fetch(`/api/solarwatch?city=${cityName}`,
+      {
+        headers: { "Authorization": `Bearer ${token}` }
+      },
+    );
     return await response.json();
   } catch (error) {
     throw new Error("This city name is not valid.");

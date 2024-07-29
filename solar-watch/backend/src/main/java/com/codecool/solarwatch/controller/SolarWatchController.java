@@ -1,5 +1,6 @@
 package com.codecool.solarwatch.controller;
 
+import com.codecool.solarwatch.model.entity.SunEntity;
 import com.codecool.solarwatch.model.payload.CreateSolarWatchReportRequest;
 import com.codecool.solarwatch.model.payload.SolarWatchReportRequest;
 import com.codecool.solarwatch.service.SolarWatchService;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/solarwatch")
@@ -43,5 +46,11 @@ public class SolarWatchController {
     public ResponseEntity<Void> deleteSolarWatchReportByCityId(@PathVariable long cityId) {
         solarWatchService.deleteSolarWatchReportByCityId(cityId);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/getAllReports")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<SunEntity> getAllSolarWatchReports() {
+        return solarWatchService.getAllSolarWatchReports();
     }
 }

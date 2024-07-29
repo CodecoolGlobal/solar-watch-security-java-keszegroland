@@ -1,27 +1,22 @@
 import { useEffect, useState } from "react";
 import AdminCityTable from "../../Components/AdminCityTable/AdminCityTable";
 
-async function fetchAllReports(options = {}) {
+async function fetchAllReports() {
   const token = localStorage.getItem("token");
-  const headers = {
-    ...options.headers,
-    "Authorization": `Bearer ${token}`
-  };
-
-  const response = await fetch("/api/solarwatch/getAllReports", { ...options, headers });
+  const response = await fetch("/api/solarwatch/getAllReports",
+    {
+      headers: { "Authorization": `Bearer ${token}` }
+    }
+  );
   return response.json();
 }
 
-async function deleteCityReport(cityReportId, options = {}) {
+async function deleteCityReport(cityReportId) {
   const token = localStorage.getItem("token");
-  const headers = {
-    ...options.headers,
-    "Authorization": `Bearer ${token}`
-  };
   const response = await fetch(`/api/solarwatch/delete/${cityReportId}`,
     {
       method: "DELETE",
-      headers
+      headers: { "Authorization": `Bearer ${token}` }
     }
   )
   return response;
