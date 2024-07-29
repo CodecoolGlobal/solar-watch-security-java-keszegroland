@@ -3,7 +3,7 @@ package com.codecool.solarwatch.service;
 
 import com.codecool.solarwatch.exception.InvalidCityNameException;
 import com.codecool.solarwatch.exception.InvalidDateException;
-import com.codecool.solarwatch.model.SunriseSunset;
+import com.codecool.solarwatch.controller.dto.SunriseSunset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;

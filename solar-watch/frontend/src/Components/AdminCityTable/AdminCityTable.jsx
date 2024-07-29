@@ -17,18 +17,18 @@ function AdminCityTable({ reports, onDelete }) {
       </thead>
       <tbody>
         {reports && reports.map(report => (
-          <tr key={report.id}>
-            <td>{report.city.name}</td>
-            <td>{report.city.lat}</td>
-            <td>{report.city.lon}</td>
-            <td>{report.city.country}</td>
+          <tr key={report.sunId}>
+            <td>{report.cityName}</td>
+            <td>{report.latitude}</td>
+            <td>{report.longitude}</td>
+            <td>{report.country}</td>
             <td>{report.sunrise}</td>
             <td>{report.sunset}</td>
             <td>
-              <Link to={`/admin/update/${report.id}`}>
+              <Link to={`/admin/update/${report?.sunId}`}>
                 <button type="button">Update</button>
               </Link>
-              <button type="button" onClick={() => onDelete(report.city.id)}>Delete</button>
+              <button type="button" onClick={() => onDelete(report.cityId)}>Delete</button>
             </td>
           </tr>
         ))}

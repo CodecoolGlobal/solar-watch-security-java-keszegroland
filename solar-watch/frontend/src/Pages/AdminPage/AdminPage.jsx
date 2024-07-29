@@ -39,7 +39,7 @@ function AdminPage() {
   function handleDelete(cityReportId) {
     deleteCityReport(cityReportId);
     setReports((reports) => {
-      return reports.filter((report) => report.city.id !== cityReportId);
+      return reports.filter((report) => report.cityId !== cityReportId);
     });
   }
 

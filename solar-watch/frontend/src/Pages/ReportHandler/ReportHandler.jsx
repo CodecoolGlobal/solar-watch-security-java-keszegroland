@@ -38,10 +38,10 @@ function ReportHandler() {
   useEffect(() => {
     async function handleFetchSolarwatchReport() {
       const response = await fetchSolarwatchReport(sunId, token);
-      setCityName(response?.city?.name || "");
-      setLatitude(response?.city?.lat || "");
-      setLongitude(response?.city?.lon || "");
-      setCountry(response?.city?.country || "");
+      setCityName(response?.cityName || "");
+      setLatitude(response?.latitude || "");
+      setLongitude(response?.longitude || "");
+      setCountry(response?.country || "");
       setSunrise(response?.sunrise || "");
       setSunset(response?.sunset || "");
     }
