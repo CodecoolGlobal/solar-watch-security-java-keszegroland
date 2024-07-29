@@ -16,7 +16,10 @@ async function deleteCityReport(cityReportId) {
   const response = await fetch(`/api/solarwatch/delete/${cityReportId}`,
     {
       method: "DELETE",
-      headers: { "Authorization": `Bearer ${token}` }
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
     }
   )
   return response;
@@ -33,17 +36,16 @@ function AdminPage() {
     getAllReports();
   }, [])
 
-
   function handleDelete(cityReportId) {
     deleteCityReport(cityReportId);
-    setReports((cityReports) => {
-      return cityReports.filter((cityReport) => cityReport.id !== cityReportId);
+    setReports((reports) => {
+      return reports.filter((report) => report.city.id !== cityReportId);
     });
   }
 
   return <div className="admin-page">
     <h1>Admin Dashboard</h1>
-    <AdminCityTable cityReports={reports} onDelete={handleDelete} />
+    <AdminCityTable reports={reports} onDelete={handleDelete} />
   </div>
 }
 
