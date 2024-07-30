@@ -160,9 +160,7 @@ public class SolarWatchService {
 
     public List<SolarWatchReportDTO> getAllSolarWatchReports() {
         List<SunEntity> sunEntities = sunRepository.findAll();
-        return sunEntities.stream()
-                .map(this::convertSunEntityToSolarWatchReportDTO)
-                .toList();
+        return sunEntities.stream().map(this::convertSunEntityToSolarWatchReportDTO).toList();
     }
 
     private SolarWatchReportDTO convertSunEntityToSolarWatchReportDTO(SunEntity sunEntity) {
