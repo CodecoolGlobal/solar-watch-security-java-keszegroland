@@ -4,7 +4,6 @@ import com.codecool.solarwatch.dto.SolarWatchReportDTO;
 import com.codecool.solarwatch.model.payload.SolarWatchReportRequest;
 import com.codecool.solarwatch.service.SolarWatchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
