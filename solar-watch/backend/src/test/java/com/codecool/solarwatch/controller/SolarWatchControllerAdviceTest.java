@@ -1,4 +1,3 @@
-/*
 package com.codecool.solarwatch.controller;
 
 import com.codecool.solarwatch.exception.InvalidCityNameException;
@@ -19,9 +18,9 @@ class SolarWatchControllerAdviceTest {
 
     @Test
     void handleInvalidCityNameException_ShouldReturnInvalidCityNameExceptionMessage() {
-        InvalidCityNameException exception = new InvalidCityNameException();
+        InvalidCityNameException exception = new InvalidCityNameException("Hungary");
         String actual = solarWatchControllerAdvice.handleInvalidCityNameException(exception);
-        String expected = "Invalid city name.";
+        String expected = "Hungary is not a valid city name.";
         assertEquals(expected, actual);
     }
 
@@ -32,4 +31,4 @@ class SolarWatchControllerAdviceTest {
         String expected = "Date must be a valid date. (format: yyyy-MM-dd)";
         assertEquals(expected, actual);
     }
-}*/
+}
