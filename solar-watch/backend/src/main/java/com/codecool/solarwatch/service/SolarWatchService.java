@@ -82,8 +82,8 @@ public class SolarWatchService {
     }
 
     public SolarWatchReportDTO getSunInformation(String cityName, String date) {
-        CityEntity city = getCityByName(cityName);
         LocalDate searchDate = convertDate(date);
+        CityEntity city = getCityByName(cityName);
         SunEntity sunEntity = sunRepository.findByCityAndDate(city, searchDate).orElseGet(() -> fetchSunFromAPI(city, searchDate));
         return convertSunEntityToSolarWatchReportDTO(sunEntity);
     }
