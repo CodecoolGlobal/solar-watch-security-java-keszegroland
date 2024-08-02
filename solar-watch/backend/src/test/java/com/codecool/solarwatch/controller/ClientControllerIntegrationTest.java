@@ -1,5 +1,7 @@
 package com.codecool.solarwatch.controller;
 
+import com.codecool.solarwatch.dto.ClientDTO;
+import com.codecool.solarwatch.model.entity.Role;
 import com.codecool.solarwatch.model.payload.CreateClientRequest;
 import com.codecool.solarwatch.security.jwt.JwtUtils;
 import com.codecool.solarwatch.service.ClientService;
@@ -43,7 +45,7 @@ class ClientControllerIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenCreateClientRequest_WhenCreateNewUser_ThenStatus201() throws Exception {
+    public void givenCreateClientRequest_WhenCreateNewUser_ThenStatus200() throws Exception {
         Authentication authenticationMock = mock(Authentication.class);
         when(authenticationManagerMock.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(authenticationMock);
@@ -54,13 +56,18 @@ class ClientControllerIntegrationTest {
         createClientRequest.setUsername("user");
         createClientRequest.setPassword("user");
 
+        ClientDTO clientDTO = new ClientDTO("user", "user", Role.ROLE_USER);
+        when(clientServiceMock.createUser(createClientRequest)).thenReturn(clientDTO);
+
         String userJson = objectMapper.writeValueAsString(createClientRequest);
 
         mockMvc.perform(post("/api/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(userJson)
                         .with(csrf()))
-                .andExpect(status().isCreated());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username").value("user"))
+                .andExpect(jsonPath("$.password").value("user"));
 
 
         verify(clientServiceMock).createUser(createClientRequest);
