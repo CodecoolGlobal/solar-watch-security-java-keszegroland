@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    restart: always
+    container_name: postgres_container
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      context: .
+    image: 'codecool/solarwatch-api:latest'
+    container_name: backend_container
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=${SPRING_JPA_HIBERNATE_DDL_AUTO}
+      - SPRING_JPA_SHOW_SQL=${SPRING_JPA_SHOW_SQL}
+      - API_KEY=${API_KEY}
+      - GEO_API_URL=${GEO_API_URL}
+      - SUN_API_URL=${SUN_API_URL}
+      - CODECOOL_APP_JWTSECRET=${CODECOOL_APP_JWTSECRET}
+      - CODECOOL_APP_JWTEXPRIATIONMS=${CODECOOL_APP_JWTEXPRIATIONMS}
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:

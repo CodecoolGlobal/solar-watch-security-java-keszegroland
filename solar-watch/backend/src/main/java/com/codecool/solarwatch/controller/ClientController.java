@@ -1,5 +1,6 @@
 package com.codecool.solarwatch.controller;
 
+import com.codecool.solarwatch.dto.ClientDTO;
 import com.codecool.solarwatch.model.payload.ClientRequest;
 import com.codecool.solarwatch.model.payload.CreateClientRequest;
 import com.codecool.solarwatch.model.payload.JwtResponse;
@@ -35,9 +36,8 @@ public class ClientController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> createUser(@RequestBody CreateClientRequest clientRequest) {
-        clientService.createUser(clientRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ClientDTO createUser(@RequestBody CreateClientRequest clientRequest) {
+        return clientService.createUser(clientRequest);
     }
 
     @PostMapping("/signin")
