@@ -1,5 +1,6 @@
 package com.codecool.solarwatch.service;
 
+import com.codecool.solarwatch.dto.ClientDTO;
 import com.codecool.solarwatch.exception.UserNotFoundException;
 import com.codecool.solarwatch.model.entity.ClientEntity;
 import com.codecool.solarwatch.model.entity.Role;
@@ -20,12 +21,14 @@ public class ClientService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void createUser(CreateClientRequest clientRequest) {
+    public ClientDTO createUser(CreateClientRequest clientRequest) {
         ClientEntity clientEntity = new ClientEntity();
         clientEntity.setUsername(clientRequest.getUsername());
         clientEntity.setPassword(passwordEncoder.encode(clientRequest.getPassword()));
         clientEntity.setRole(Role.ROLE_USER);
         clientRepository.save(clientEntity);
+
+        return new ClientDTO(clientEntity.getUsername(), clientEntity.getPassword(), clientEntity.getRole());
     }
 
     public String becomeAnAdminWithAUser() {
