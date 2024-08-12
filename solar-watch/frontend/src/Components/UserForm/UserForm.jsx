@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import "./userForm.css";
 import { FaLock, FaUser } from "react-icons/fa";
-import { useAuth } from "../../AuthProvider.js";
+import { useAuth } from "../../AuthProvider.jsx";
+import { Link, useNavigate } from "react-router-dom";
 
 async function handleRequest(url, client) {
   const response = await fetch(url, {

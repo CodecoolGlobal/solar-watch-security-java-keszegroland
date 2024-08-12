@@ -1,0 +1,1 @@
+CREATE DATABASE solarwatch_docker_db;

@@ -47,7 +47,7 @@ public class ClientController {
         String jwt = jwtUtils.generateJwtToken(authentication);
         User userDetails = (User) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), roles.getFirst()));
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), roles.get(0)));
     }
 
     @GetMapping("/me")

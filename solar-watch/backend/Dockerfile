@@ -1,7 +1,15 @@
-FROM eclipse-temurin:21-jre-alpine
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS build-phase
 
-VOLUME /tmp
+WORKDIR /app
 
-COPY target/*.jar app.jar
+COPY . .
 
-ENTRYPOINT ["java","-jar","app.jar"]
+RUN mvn clean package
+
+FROM eclipse-temurin:17-jre-jammy
+
+WORKDIR /app
+
+COPY --from=build-phase /app/target/*.jar app.jar
+
+CMD ["java", "-jar", "app.jar"]

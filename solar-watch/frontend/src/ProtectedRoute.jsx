@@ -1,17 +1,15 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "./AuthProvider.js";
+import { useAuth } from "./AuthProvider.jsx";
 
 function ProtectedRoute({ roles }) {
   const { user } = useAuth();
-
-  //console.log("ProtectedRoute - User:", user.role);
 
   if (!user) {
     return <Navigate to={"/user/signin"} />
   }
 
-  if (!roles.includes(user.role)) {
+  if (roles && !roles.includes(user.role)) {
     return <Navigate to={"/solarwatch"} />;
   }
 

@@ -3,7 +3,7 @@
   height: 80vh;
   box-shadow: inset 0 0 0 5px rgb(83, 82, 82);
   border-radius: 46px;
-  background-image: url(/src/clouds.jpg);
+  background-image: url(/clouds.jpg);
   background-size: cover;
   background-position: center;
   display: flex;
