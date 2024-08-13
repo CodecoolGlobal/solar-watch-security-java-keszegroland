@@ -1,0 +1,20 @@
+.report-handler {
+  background: rgb(83, 82, 82);
+  border-radius: 40px;
+  padding: 30px;
+  width: 25vw;
+  height: 100%;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.input-box {
+  width: 100%;
+}
+
+.report-form{
+  margin: auto;
+  width: 80%;
+}

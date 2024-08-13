@@ -19,17 +19,16 @@ services:
     depends_on:
       - postgres
     environment:
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=${SPRING_JPA_HIBERNATE_DDL_AUTO}
-      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
-      - SPRING_JPA_SHOW_SQL=${SPRING_JPA_SHOW_SQL}
-      - CODECOOL_APP_JWTSECRET=${CODECOOL_APP_JWTSECRET}
-      - CODECOOL_APP_JWTEXPIRATIONMS=${CODECOOL_APP_JWTEXPIRATIONMS}
       - API_KEY=${API_KEY}
-      - GEO_API_URL=${GEO_API_URL}
-      - SUN_API_URL=${SUN_API_URL}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+      - SPRING_JPA_SHOW_SQL=true
+      - CODECOOL_APP_JWTSECRET=======================CodeCool=Spring===========================
+      - CODECOOL_APP_JWTEXPIRATIONMS=86400000
+      - GEO_API_URL=https://api.openweathermap.org/geo/1.0/direct?q=%s&appid=%s
+      - SUN_API_URL=https://api.sunrise-sunset.org/json?lat=%s&lng=%s&date=%s
 
   frontend: 
     build: 

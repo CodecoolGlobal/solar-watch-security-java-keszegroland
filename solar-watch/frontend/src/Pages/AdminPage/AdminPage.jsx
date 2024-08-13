@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminCityTable from "../../Components/AdminCityTable/AdminCityTable";
+import "./adminPage.css";
 
 async function fetchAllReports() {
   const token = localStorage.getItem("token");
@@ -44,7 +45,7 @@ function AdminPage() {
   }
 
   return <div className="admin-page">
-    <h1>Admin Dashboard</h1>
+    <h1 className="header">Admin Dashboard</h1>
     <AdminCityTable reports={reports} onDelete={handleDelete} />
   </div>
 }

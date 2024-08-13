@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import "./reportHandler.css";
 
 async function fetchSolarwatchReport(sunId, token) {
   const response = await fetch(`/api/solarwatch/${sunId}`,
