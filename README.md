@@ -1,6 +1,6 @@
 # Welcome to the SolarWatch Project Repository!
 
-SolarWatch is a comprehensive Spring Boot Web API and MVC application that provides sunrise and sunset times for cities. This project demonstrates best practices in full-stack application development, including containerization, CI/CD workflows, database integration, user authentication, and frontend development using React.
+SolarWatch is a full-stack application that uses Spring Boot for the backend to display the sunrise and sunset times for the selected city. This project showcases best practices in full-stack development, including containerization, CI/CD workflows, database integration, user authentication, and frontend development with React.
 
 ## Table of Contents
 - [Overview](#overview)
