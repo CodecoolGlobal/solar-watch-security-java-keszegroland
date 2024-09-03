@@ -121,14 +121,18 @@ SolarWatch began as a simple Spring Boot Web API project and has evolved into a 
   - Handles user authentication and authorization via Spring Security.
   - Features include:
     - User Registration: Allows new users to sign up.
+      - Visual: ![RegisterImage](.//ImagesReadme/RegisterImage.png)
     - Authentication: Users log in to receive a JWT token.
+      - Visual: ![SignInImage](.//ImagesReadme/SignInImage.png)
     - Authorization: Secures endpoints to authenticated users.
 
   ### Frontend Integration
   - Built with React-Vite to interact with the SolarWatch API.
   - Features include:
     - City Search: Users can query sunrise and sunset times.
+      - Visual: ![ReportImage](.//ImagesReadme/ReportImage.png)
     - Admin Page: Restricted to admin users for managing saved requests.
+      - Visuals: ![AdminImage](.//ImagesReadme/AdminImage.png) ![UpdateImage](.//ImagesReadme/UpdateImage.png)
   
   ### Integration Testing
   - Comprehensive integration tests ensure application functionality and robustness.
@@ -148,7 +152,7 @@ Using SolarWatch:
 
 ## Technologies
 Technologies used in this application:
-  - Backend: Spring Boot, Spring MVC, Spring Security, Hibernate, PostgreSQL
+  - Backend: Spring Boot, Spring MVC, Spring Data JPA, Spring Security, Hibernate, PostgreSQL
   - Frontend: React-Vite
-  - Containerization: Docker, Docker Compose
+  - Containerization: Docker
   - CI/CD: GitHub Actions
