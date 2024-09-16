@@ -121,9 +121,9 @@ SolarWatch began as a simple Spring Boot Web API project and has evolved into a 
   - Handles user authentication and authorization via Spring Security.
   - Features include:
     - User Registration: Allows new users to sign up.
-      - Visual: ![RegisterImage](.//ImagesReadme/RegisterImage.png)
+    ![RegisterImage](.//ImagesReadme/RegisterImage.png)
     - Authentication: Users log in to receive a JWT token.
-      - Visual: ![SignInImage](.//ImagesReadme/SignInImage.png)
+    ![SignInImage](.//ImagesReadme/SignInImage.png)
     - Authorization: Secures endpoints to authenticated users.
 
   ### Frontend Integration
@@ -132,7 +132,7 @@ SolarWatch began as a simple Spring Boot Web API project and has evolved into a 
     - City Search: Users can query sunrise and sunset times.
     ![ReportImage](.//ImagesReadme/ReportImage.png)
     - Admin Page: Restricted to admin users for managing saved requests.
-    [AdminImage](.//ImagesReadme/AdminImage.png) ![UpdateImage](.//ImagesReadme/UpdateImage.png)
+    ![AdminImage](.//ImagesReadme/AdminImage.png) ![UpdateImage](.//ImagesReadme/UpdateImage.png)
   
   ### Integration Testing
   - Comprehensive integration tests ensure application functionality and robustness.
