@@ -4,11 +4,11 @@ SolarWatch is a full-stack application that uses Spring Boot for the backend to 
 
 ## Table of Contents
 - [Overview](#overview)
-- [Getting Started](#getting-Started)
+- [Getting Started](#getting-started)
+  - [Docker Setup](#docker-setup)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Features](#features)
-  - [Dockerization](#dockerization)
   - [User Management](#user-management)
   - [Frontend Integration](#frontend-integration)
   - [Integration Testing](#integration-testing)
@@ -27,16 +27,38 @@ SolarWatch began as a simple Spring Boot Web API project and has evolved into a 
   - CI/CD: Employs GitHub Actions for automated testing and deployment workflows.
 
 ## Getting Started
+  ### Docker Setup
+  The application is fully containerized using Docker.
+  If you prefer containerized deployment, follow the steps below to run the application using Docker.
+  Otherwise, you can manually install the backend and frontend by following the instructions in the [Installation](#installation) section.
+  - To run the application with Docker Compose:
+    - Set environment variables in `docker-compose.yaml`.
+      ```bash
+      # db env variables
+       POSTGRES_DB=YOUR_DB_NAME
+       POSTGRES_USER=YOUR_DB_USERNAME
+       POSTGRES_PASSWORD=YOUR_DB_PASSWORD
+
+      ## backend env variables
+       SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/YOUR_DB_NAME
+       SPRING_DATASOURCE_USERNAME=YOUR_DB_USERNAME
+       SPRING_DATASOURCE_PASSWORD=YOUR_DB_PASSWORD
+       API_KEY=YOUR_API_KEY
+      ```
+    - Build and start the containers:
+      ```bash
+       docker compose up --build
+      ```
+
   ### Prerequisites
   Ensure the following are installed:
   - Java 17+
   - Maven 4+
-  - Docker
   - PostgreSQL
   - Node.js and npm (for the frontend)
 
   ### Installation
-  To set up the project locally:
+  If you're not using Docker, follow these steps to manually install and set up the project locally:
 1. Clone the repository from GitHub:
    ```bash
     git clone git@github.com:CodecoolGlobal/solar-watch-security-java-keszegroland.git
@@ -95,28 +117,6 @@ SolarWatch began as a simple Spring Boot Web API project and has evolved into a 
        ```
 
 ## Features
-  ### Dockerization
-  - The application is fully containerized using Docker.
-  - Docker Compose manages multi-container setups, including the PostgreSQL database.
-  - To run the application with Docker Compose:
-    - Set environment variables in `docker-compose.yaml`.
-        ```bash
-        # db env variables
-         POSTGRES_DB=YOUR_DB_NAME
-         POSTGRES_USER=YOUR_DB_USERNAME
-         POSTGRES_PASSWORD=YOUR_DB_PASSWORD
-
-        ## backend env variables
-         SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/YOUR_DB_NAME
-         SPRING_DATASOURCE_USERNAME=YOUR_DB_USERNAME
-         SPRING_DATASOURCE_PASSWORD=YOUR_DB_PASSWORD
-         API_KEY=YOUR_API_KEY
-        ```
-    - Build and start the containers:
-        ```bash
-         docker compose up --build
-        ```
-  
   ### User Management
   - Handles user authentication and authorization via Spring Security.
   - Features include:
@@ -130,9 +130,9 @@ SolarWatch began as a simple Spring Boot Web API project and has evolved into a 
   - Built with React-Vite to interact with the SolarWatch API.
   - Features include:
     - City Search: Users can query sunrise and sunset times.
-      - Visual: ![ReportImage](.//ImagesReadme/ReportImage.png)
+    ![ReportImage](.//ImagesReadme/ReportImage.png)
     - Admin Page: Restricted to admin users for managing saved requests.
-      - Visuals: ![AdminImage](.//ImagesReadme/AdminImage.png) ![UpdateImage](.//ImagesReadme/UpdateImage.png)
+    [AdminImage](.//ImagesReadme/AdminImage.png) ![UpdateImage](.//ImagesReadme/UpdateImage.png)
   
   ### Integration Testing
   - Comprehensive integration tests ensure application functionality and robustness.
@@ -153,6 +153,6 @@ Using SolarWatch:
 ## Technologies
 Technologies used in this application:
   - Backend: Spring Boot, Spring MVC, Spring Data JPA, Spring Security, Hibernate, PostgreSQL
-  - Frontend: React-Vite
+  - Frontend: React-Vite, Vanilla CSS
   - Containerization: Docker
   - CI/CD: GitHub Actions
