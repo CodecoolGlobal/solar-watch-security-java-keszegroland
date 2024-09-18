@@ -4,6 +4,7 @@ SolarWatch is a full-stack application that uses Spring Boot for the backend to 
 
 ## Table of Contents
 - [Overview](#overview)
+- [Technologies](#technologies)
 - [Getting Started](#getting-started)
   - [Docker Setup](#docker-setup)
   - [Prerequisites](#prerequisites)
@@ -14,7 +15,6 @@ SolarWatch is a full-stack application that uses Spring Boot for the backend to 
   - [Integration Testing](#integration-testing)
   - [Continuous Integration & Deployment](#continuous-integration--deployment)
 - [Usage](#usage)
-- [Technologies](#technologies)
 
 ## Overview
 SolarWatch began as a simple Spring Boot Web API project and has evolved into a full-featured application with the following enhancements:
@@ -25,6 +25,23 @@ SolarWatch began as a simple Spring Boot Web API project and has evolved into a 
   - User Management: Incorporates Spring Security for user authentication and authorization.
   - Automated Testing: Includes integration tests to ensure application reliability.
   - CI/CD: Employs GitHub Actions for automated testing and deployment workflows.
+
+## Technologies
+Technologies used in this application:
+  - Backend:
+    - [![spring-boot][spring-boot]][spring-boot-url]
+    - [![spring-web-mvc][spring-web-mvc]][spring-web-mvc-url]
+    - [![spring-data-jpa][spring-data-jpa]][spring-data-jpa-url]
+    - [![spring-security][spring-security]][spring-security-url]
+    - [![hibernate][hibernate]][hibernate-url]
+    - [![postgresql][postgresql]][postgresql-url]
+  - Frontend:
+    - [![react.js][react.js]][react-url]
+    - [![css3][css3]][css3-url]
+  - Containerization:
+    - [![docker][docker]][docker-url]
+  - CI/CD:
+    - [![github-actions][github-actions]][github-actions-url]
 
 ## Getting Started
   ### Docker Setup
@@ -52,10 +69,11 @@ SolarWatch began as a simple Spring Boot Web API project and has evolved into a 
 
   ### Prerequisites
   Ensure the following are installed:
-  - Java 17+
-  - Maven 4+
-  - PostgreSQL
-  - Node.js and npm (for the frontend)
+  - [![java][java]][java-url]
+  - [![maven][maven]][maven-url]
+  - [![postgresql][postgresql]][postgresql-url]
+  - [![nodejs][node.js]][node-url]
+  - [![npm][npm]][npm-url]
 
   ### Installation
   If you're not using Docker, follow these steps to manually install and set up the project locally:
@@ -150,9 +168,32 @@ Using SolarWatch:
   - Admin Access: If you have an admin role, access the [http://localhost:5173/admin](http://localhost:5173/admin) page to manage saved requests.
 
 
-## Technologies
-Technologies used in this application:
-  - Backend: Spring Boot, Spring MVC, Spring Data JPA, Spring Security, Hibernate, PostgreSQL
-  - Frontend: React-Vite, Vanilla CSS
-  - Containerization: Docker
-  - CI/CD: GitHub Actions
+
+[spring-boot]: https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=Spring&logoColor=white
+[spring-boot-url]: https://spring.io/projects/spring-boot
+[spring-web-mvc]: https://img.shields.io/badge/SPRING%20WEB%20MVC-6DB33F?style=for-the-badge&logo=Spring&logoColor=white
+[spring-web-mvc-url]: https://docs.spring.io/spring-framework/reference/web/webmvc.html
+[spring-data-jpa]: https://img.shields.io/badge/SPRING%20DATA%20JPA-6DB33F?style=for-the-badge&logo=Spring&logoColor=white
+[spring-data-jpa-url]: https://spring.io/projects/spring-data-jpa
+[spring-security]: https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white
+[spring-security-url]: https://spring.io/projects/spring-security
+[hibernate]: https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white
+[hibernate-url]: https://hibernate.org/
+[postgresql]: https://img.shields.io/badge/postgresql-4169e1?style=for-the-badge&logo=postgresql&logoColor=white
+[postgresql-url]: https://www.postgresql.org/
+[react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[react-url]: https://reactjs.org/
+[CSS3]: https://img.shields.io/badge/CSS3-blue?style=for-the-badge
+[CSS3-url]: https://developer.mozilla.org/en-US/docs/Web/CSS
+[docker]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
+[docker-url]: https://www.docker.com/
+[github-actions]: https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white
+[github-actions-url]: https://docs.github.com/en/actions
+[java]: https://img.shields.io/badge/Java-17%2B-ED8B00?style=for-the-badge&labelColor=ED8B00&logo=java&color=808080[Java
+[java-url]: https://www.java.com/en/
+[maven]: https://img.shields.io/badge/Maven-4%2B-ED8B00?style=for-the-badge&labelColor=ED8B00&logo=maven&color=808080[Maven
+[maven-url]: https://maven.apache.org/
+[node.js]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white
+[node-url]: https://nodejs.org/en
+[npm]: https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white
+[npm-url]: https://www.npmjs.com/
